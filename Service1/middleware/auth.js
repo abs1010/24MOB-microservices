@@ -8,11 +8,12 @@ const auth = (req,res,next)=>{
         return res.status(401).send({output:`Access denied`});
     }
 
-    jwt.verify(token_created,config.jwt_key,(error,result)=>{
+    jwt.verify(token_created, config.jwt_key, (error,result)=>{
         if(error) return res.status(401).send({output:`Token Fail -> ${error}`});
         req.content = {
             id:result.id,
-            user:result.user
+            user:result.user,
+            email:result.email
         }
         next();
     });

@@ -1,13 +1,14 @@
 const jwt = require('jsonwebtoken');
+const config = require("../config/config");
 
 function gerarToken(id, usuario, email) {
     return jwt.sign(
         {
-            idusuario:id,
-            nomeusuario:usuario,
+            id:id,
+            user:usuario,
             email:email
-        }, "informatica", { 
-            expiresIn: "1d"
+        }, config.jwt_key, { 
+            expiresIn: config.jwt_expires
         }
     )
 }
