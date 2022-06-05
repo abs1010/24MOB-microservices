@@ -1,9 +1,10 @@
+require('../data/connection')
 const express = require('express');
 const router = express.Router();
-const generateToken = require('../middleware/gerarToken');
+const generateToken = require('../utils/token');
 const tokenVerification = require('../middleware/auth');
 const bcrypt = require("bcrypt");
-const Client = require('../data/connection')
+const Client = require('../model/user')
 
 router.get('/', tokenVerification, (req, res) => {
     
