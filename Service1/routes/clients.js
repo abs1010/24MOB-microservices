@@ -45,13 +45,20 @@ router.post('/cadastro', (req, res) => {
 })
 
 router.put('/atualizar', tokenVerification, (req, res) => {
-    
-    Client.findByIdAndUpdate(req.content.id, req.body, {new: true}, (err, dados)=>{
-        if(err) {
-           res.status(400).send({output: `Erro ao atualizar->${err}`});
-        } else {
-            res.status(200).send({output: dados})
-        }
+
+    const encryptedPassword = bcrypt.hash(req.body.senha, 10, (error, encryptedPassword) => {
+        if (error) return res.status(400).send({output: `Error during encryption->${err}`})
+
+        req.body.senha = encryptedPassword
+
+        Client.findByIdAndUpdate(req.content.id, req.body, {new: true}, (err, dados)=>{
+            if(err) {
+               res.status(400).send({output: `Erro ao atualizar->${err}`});
+            } else {
+                res.status(200).send({output: dados})
+            }
+        })
+
     })
 
 })
